@@ -7,6 +7,7 @@ import com.thanh.ebacsi.dto.response.UserInfoResponse;
 import com.thanh.ebacsi.entity.Role;
 import com.thanh.ebacsi.entity.User;
 
+import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.RoleRepository;
 import com.thanh.ebacsi.repository.UserRepository;
 import com.thanh.ebacsi.service.role.RoleService;
@@ -68,14 +69,14 @@ public class RoleController {
 
     @DeleteMapping("delete")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    ResponseEntity<ResponseObject> deleteRoleOfUser(@RequestBody RoleRequest roleRequest) {
+    ResponseEntity<UserInfoResponse> deleteRoleOfUser(@RequestBody RoleRequest roleRequest) {
         Role role = roleRepository.getRoleByRoleId(roleRequest.getRoleId());
         User user = userRepository.findByUserId(roleRequest.getUserId());
         user.getRole().remove(role);
-        userRepository.save(user);
+
         if (role != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Delete successfully", ""));
+            return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(userRepository.save(user)));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("Failed", "Not Found role to delete", ""));
+        throw new NotFoundException("Not found role of User");
     }
 }
