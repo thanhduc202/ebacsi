@@ -1,6 +1,7 @@
 package com.thanh.ebacsi.controller;
 
 import com.thanh.ebacsi.dto.request.UserInfoRequest;
+import com.thanh.ebacsi.dto.response.TokenResponse;
 import com.thanh.ebacsi.entity.Category;
 import com.thanh.ebacsi.entity.Post;
 import com.thanh.ebacsi.entity.User;
@@ -9,6 +10,9 @@ import com.thanh.ebacsi.dto.response.PostResponse;
 import com.thanh.ebacsi.dto.response.ResponseObject;
 import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.PostRepository;
+import com.thanh.ebacsi.security.Convert;
+import com.thanh.ebacsi.security.CustomUserDetailsService;
+import com.thanh.ebacsi.security.JwtUtils;
 import com.thanh.ebacsi.service.category.CategoryService;
 
 import com.thanh.ebacsi.service.post.PostService;
@@ -20,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -45,9 +50,19 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     @GetMapping("/view")
     ResponseEntity<ResponseObject> getListPost() {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Post query success", postService.getAllPost()));
+    }
+    @GetMapping("/view/user")
+    ResponseEntity<ResponseObject> getPostByUserId(@RequestHeader("Authorization") String token) {
+        token = Convert.bearerTokenToToken(token);
+        User user = userService.findByUserName(jwtUtils.extractUsername(token));
+        Long userId = user.getUserId();
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Post query success", postRepository.findPostByUserId(userId)));
     }
 
     @GetMapping("/{id}")

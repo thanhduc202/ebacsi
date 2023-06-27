@@ -19,4 +19,6 @@ public interface PostService {
 
     public List<PostResponse> search (String keyword);
 
+    public Long getIdFromToken(String token);
+
 }

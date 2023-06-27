@@ -9,6 +9,7 @@ import com.thanh.ebacsi.repository.CategoryRepository;
 import com.thanh.ebacsi.repository.PostRepository;
 import com.thanh.ebacsi.repository.UserRepository;
 
+import com.thanh.ebacsi.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Autowired
     private UserRepository userRepository;
@@ -80,5 +84,13 @@ public class PostServiceImpl implements PostService {
             return postRepository.search(keyword);
         }
         return postRepository.getAllPost();
+    }
+
+    @Override
+    public Long getIdFromToken(String token) {
+        String secret = "secret"; // Replace with your actual secret key
+        // Remove the "Bearer " prefix from the token
+        String jwtToken = token.replace("Bearer ", "");
+        return jwtUtils.extractIdFromToken(secret, jwtToken);
     }
 }
