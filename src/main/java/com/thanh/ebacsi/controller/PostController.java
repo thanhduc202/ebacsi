@@ -96,7 +96,6 @@ public class PostController {
         }
         Category category = categoryService.findById(postRequest.getCategoryId());
         Post post1 = postService.getPostsByPostId(postRequest.getPostId());
-//        post1.setPostId(postRequest.getPostId());
         post1.setTitle(postRequest.getTitle());
         post1.setContent(postRequest.getContent());
         post1.setCategory(category);
