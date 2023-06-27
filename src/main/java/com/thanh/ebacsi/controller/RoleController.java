@@ -57,10 +57,23 @@ public class RoleController {
 
     @DeleteMapping("/{roleId}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    ResponseEntity<ResponseObject> deletePost(@PathVariable(name = "roleId") Long roleId) {
+    ResponseEntity<ResponseObject> deleteRole(@PathVariable(name = "roleId") Long roleId) {
         boolean exists = roleRepository.existsById(roleId);
         roleRepository.deleteById(roleId);
         if (exists) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Delete successfully", ""));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("Failed", "Not Found role to delete", ""));
+    }
+
+    @DeleteMapping("delete")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    ResponseEntity<ResponseObject> deleteRoleOfUser(@RequestBody RoleRequest roleRequest) {
+        Role role = roleRepository.getRoleByRoleId(roleRequest.getRoleId());
+        User user = userRepository.findByUserId(roleRequest.getUserId());
+        user.getRole().remove(role);
+        userRepository.save(user);
+        if (role != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Delete successfully", ""));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("Failed", "Not Found role to delete", ""));
