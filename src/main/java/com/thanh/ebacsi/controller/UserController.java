@@ -63,9 +63,6 @@ public class UserController {
         if(foundRole == null){
             throw new NotFoundException("Not found role name");
         }
-        if (foundUser != null) {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new UserInfoResponse());
-        }
         User user = new User();
         user.setUsername(userInfoRequest.getUsername());
         user.setPassword(userInfoRequest.getPassword());
