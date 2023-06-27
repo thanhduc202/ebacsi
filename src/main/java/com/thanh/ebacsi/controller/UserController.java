@@ -14,6 +14,7 @@ import com.thanh.ebacsi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -74,6 +75,19 @@ public class UserController {
         user.setRole(roleSet);
         User result = userRepository.save(user);
         return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(result));
+    }
+
+    @PutMapping("/update")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    ResponseEntity<UserInfoResponse> updateUser(@RequestBody UserInfoRequest userInfoRequest) {
+        if (userInfoRequest.getUserId() == null) {
+            throw new NotFoundException("Not found user");
+        }
+        User user = userService.findById(userInfoRequest.getUserId());
+        user.setUsername(userInfoRequest.getUsername());
+        user.setPassword(userInfoRequest.getPassword());
+        User result = userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new UserInfoResponse(result));
     }
 
     @DeleteMapping("/delete")
