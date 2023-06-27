@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("""
                 SELECT p from Post p
                 inner join p.category c
-                where c.categoryId = :categoryId 
+                where c.categoryId = :categoryId
             """)
     List<PostResponse> getPostsByCategoryId(Long categoryId);
 
