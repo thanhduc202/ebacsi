@@ -7,6 +7,7 @@ import com.thanh.ebacsi.entity.User;
 import com.thanh.ebacsi.dto.request.PostRequest;
 import com.thanh.ebacsi.dto.response.PostResponse;
 import com.thanh.ebacsi.dto.response.ResponseObject;
+import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.PostRepository;
 import com.thanh.ebacsi.service.category.CategoryService;
 
@@ -87,17 +88,20 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(new PostResponse(postService.insertPost(result)));
     }
 
-    @PutMapping("/{postId}")
+    @PutMapping("/update")
     @PreAuthorize("hasAnyAuthority('AUTHOR','EDITOR','ADMIN')")
-    ResponseEntity<PostResponse> updatePost(@RequestBody PostRequest postRequest, @PathVariable(name = "postId") Long postId) {
+    ResponseEntity<PostResponse> updatePost(@RequestBody PostRequest postRequest) {
+        if (postRequest.getPostId() == null) {
+            throw new NotFoundException("Not found post");
+        }
         Category category = categoryService.findById(postRequest.getCategoryId());
-        Post post1 = postService.getPostsByPostId(postId);
+        Post post1 = postService.getPostsByPostId(postRequest.getPostId());
+//        post1.setPostId(postRequest.getPostId());
         post1.setTitle(postRequest.getTitle());
         post1.setContent(postRequest.getContent());
         post1.setCategory(category);
         post1.setUpdateAt(new Date().toInstant());
         Post result = postRepository.save(post1);
-
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new PostResponse(result));
     }
 
