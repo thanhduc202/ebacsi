@@ -2,6 +2,7 @@ package com.thanh.ebacsi.service.user;
 
 import com.thanh.ebacsi.dto.request.UserInfoRequest;
 import com.thanh.ebacsi.entity.User;
+import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.UserRepository;
 import com.thanh.ebacsi.dto.response.ResponseObject;
 import com.thanh.ebacsi.dto.response.TokenResponse;
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) {
         Optional<User> foundUser = userRepository.findById(id);
         if (!foundUser.isPresent()) {
-            throw new RuntimeException();
+            throw new NotFoundException("Not found user");
         }
         return foundUser.get();
     }
