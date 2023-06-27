@@ -30,7 +30,6 @@ import java.util.Date;
 @RestController
 @RequestMapping(path = "/api/v1/post")
 @Slf4j
-@PreAuthorize("isAuthenticated()")
 public class PostController {
 
     @Autowired
@@ -88,12 +87,10 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(new PostResponse(postService.insertPost(result)));
     }
 
-
     @PutMapping("/{postId}")
     @PreAuthorize("hasAnyAuthority('AUTHOR','EDITOR','ADMIN')")
     ResponseEntity<PostResponse> updatePost(@RequestBody PostRequest postRequest, @PathVariable(name = "postId") Long postId) {
         Category category = categoryService.findById(postRequest.getCategoryId());
-
         Post post1 = postService.getPostsByPostId(postId);
         post1.setTitle(postRequest.getTitle());
         post1.setContent(postRequest.getContent());
@@ -103,7 +100,6 @@ public class PostController {
 
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new PostResponse(result));
     }
-
 
     @DeleteMapping("/{postId}")
     @PreAuthorize("hasAnyAuthority('AUTHOR','EDITOR','ADMIN')")
