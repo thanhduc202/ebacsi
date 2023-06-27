@@ -1,5 +1,4 @@
 package com.thanh.ebacsi.service.post;
-import com.thanh.ebacsi.dto.request.UserInfoRequest;
 import com.thanh.ebacsi.dto.response.PostResponse;
 import com.thanh.ebacsi.entity.Post;
 import java.util.List;

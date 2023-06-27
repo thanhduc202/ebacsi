@@ -1,7 +1,6 @@
 package com.thanh.ebacsi.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ClaimsMutator;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
