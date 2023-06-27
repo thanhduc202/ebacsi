@@ -1,0 +1,42 @@
+package com.thanh.ebacsi.controller;
+
+
+import com.thanh.ebacsi.entity.Category;
+import com.thanh.ebacsi.repository.CategoryRepository;
+import com.thanh.ebacsi.dto.request.CategoryRequest;
+import com.thanh.ebacsi.dto.response.CategoryResponse;
+import com.thanh.ebacsi.dto.response.ResponseObject;
+import com.thanh.ebacsi.service.category.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/v1/category")
+public class CategoryController {
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @GetMapping("/view")
+    ResponseEntity<ResponseObject> getAllCategory() {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Category query success", categoryService.findAll()));
+    }
+
+    @PostMapping("/insert")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    ResponseEntity<CategoryResponse> insertCategory(@RequestBody CategoryRequest categoryRequest) {
+        List<Category> category = categoryService.findByCname(categoryRequest.getCname());
+        if (category.size() > 0) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new CategoryResponse());
+        }
+        Category category1 = new Category();
+        category1.setCname(categoryRequest.getCname());
+        Category result = categoryService.save(category1);
+        return ResponseEntity.status(HttpStatus.OK).body(new CategoryResponse(categoryService.save(result)));
+    }
+}
