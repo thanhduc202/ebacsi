@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public class PostRequest {
+    private Long postId;
     private String content;
     private String title;
     private Long categoryId;
