@@ -2,7 +2,6 @@ package com.thanh.ebacsi.service.role;
 
 import com.thanh.ebacsi.dto.response.RoleResponse;
 import com.thanh.ebacsi.entity.Role;
-import com.thanh.ebacsi.entity.User;
 import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,4 +48,5 @@ public class RoleServiceImpl implements RoleService{
     public Role getRoleByRoleId(Long roleId) {
         return roleRepository.getRoleByRoleId(roleId);
     }
+
 }
