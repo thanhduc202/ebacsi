@@ -1,6 +1,7 @@
 package com.thanh.ebacsi.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ClaimsMutator;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -20,6 +20,11 @@ public class JwtUtils {
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public Long extractIdFromToken(String token, String secret){
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Long.parseLong(claims.getSubject());
     }
 
     public Date extractExpiration(String token) {
