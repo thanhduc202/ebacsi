@@ -95,12 +95,12 @@ public class PostController {
             throw new NotFoundException("Not found post");
         }
         Category category = categoryService.findById(postRequest.getCategoryId());
-        Post post1 = postService.getPostsByPostId(postRequest.getPostId());
-        post1.setTitle(postRequest.getTitle());
-        post1.setContent(postRequest.getContent());
-        post1.setCategory(category);
-        post1.setUpdateAt(new Date().toInstant());
-        Post result = postRepository.save(post1);
+        Post post = postService.getPostsByPostId(postRequest.getPostId());
+        post.setTitle(postRequest.getTitle());
+        post.setContent(postRequest.getContent());
+        post.setCategory(category);
+        post.setUpdateAt(new Date().toInstant());
+        Post result = postRepository.save(post);
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new PostResponse(result));
     }
 
