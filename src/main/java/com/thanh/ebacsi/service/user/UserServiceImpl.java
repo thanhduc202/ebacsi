@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> foundUser = userRepository.findById(id);
         if (!foundUser.isPresent()) {
             throw new NotFoundException("Not found user");
+
         }
         return foundUser.get();
     }
