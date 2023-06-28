@@ -35,6 +35,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "User query success", userService.findAll()));
     }
 
+
     @GetMapping("/{id}")
     ResponseEntity<ResponseObject> getUserById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "User query success", userService.findById(id)));
@@ -87,9 +88,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new UserInfoResponse(result));
     }
 
-    @DeleteMapping("/delete")
-    ResponseEntity<ResponseObject> delete(@PathVariable String username) {
-        return userService.delete(username);
+    @PutMapping("/disable")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    ResponseEntity<ResponseObject> disableUser(@RequestBody UserInfoRequest userInfoRequest) {
+        User user = userService.findById(userInfoRequest.getUserId());
+        user.setEnable(false);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "user query success",userRepository.save(user)));
+    }
+
+    @PutMapping("/enable")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    ResponseEntity<ResponseObject> enableUser(@RequestBody UserInfoRequest userInfoRequest) {
+        User user = userService.findById(userInfoRequest.getUserId());
+        user.setEnable(true);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "user query success",userRepository.save(user)));
     }
 
 }
