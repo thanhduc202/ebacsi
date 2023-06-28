@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','AUTHOR')")
     ResponseEntity<UserInfoResponse> updateUser(@RequestBody UserInfoRequest userInfoRequest) {
         if (userInfoRequest.getUserId() == null) {
             throw new NotFoundException("Not found user");
@@ -108,5 +108,4 @@ public class UserController {
         user.setEnable(true);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "user query success",userRepository.save(user)));
     }
-
 }
