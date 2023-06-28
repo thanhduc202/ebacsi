@@ -25,8 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
-    @Autowired
-    private Convert convert;
+
     @Autowired
     private JwtUtils jwtUtils;
 
