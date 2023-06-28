@@ -90,7 +90,6 @@ public class RoleController {
         Role role = roleRepository.getRoleByRoleId(roleRequest.getRoleId());
         User user = userRepository.findByUserId(roleRequest.getUserId());
         user.getRole().remove(role);
-
         if (role != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(userRepository.save(user)));
         }
