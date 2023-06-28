@@ -65,7 +65,6 @@ public class UserController {
         User foundUser = userRepository.findByUsername(userInfoRequest.getUsername().trim());
         //Register user auto save role is USER
         Role foundRole = roleService.getRoleDefault();
-
         if(foundRole == null){
             throw new NotFoundException("Not found role name");
         }
