@@ -20,4 +20,6 @@ public interface UserService {
     public User findById(Long id);
 
     public List<UserInfoResponse> findAll();
+
+    public List<UserInfoResponse> getUserEnable();
 }

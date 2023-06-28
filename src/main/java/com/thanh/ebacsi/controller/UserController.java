@@ -31,10 +31,15 @@ public class UserController {
     private RoleService roleService;
 
     @GetMapping("/view")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     ResponseEntity<ResponseObject> getAllUser() {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "User query success", userService.findAll()));
     }
 
+    @GetMapping("/viewUserEnable")
+    ResponseEntity<ResponseObject> getAllUserEnable() {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "User query success", userService.getUserEnable()));
+    }
 
     @GetMapping("/{id}")
     ResponseEntity<ResponseObject> getUserById(@PathVariable Long id) {

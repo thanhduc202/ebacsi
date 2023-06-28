@@ -20,5 +20,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.userId=?1")
     public User findByUserId(Long userId);
+
+    @Query("""
+            select u from User u where u.enable = true
+            """)
+    public List<UserInfoResponse> getUserEnable();
 }
 

@@ -75,4 +75,9 @@ public class UserServiceImpl implements UserService {
     public List<UserInfoResponse> findAll() {
         return userRepository.findAllUser();
     }
+
+    @Override
+    public List<UserInfoResponse> getUserEnable() {
+        return userRepository.getUserEnable();
+    }
 }
