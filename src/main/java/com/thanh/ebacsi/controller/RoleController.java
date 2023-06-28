@@ -10,8 +10,11 @@ import com.thanh.ebacsi.entity.User;
 import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.RoleRepository;
 import com.thanh.ebacsi.repository.UserRepository;
+import com.thanh.ebacsi.security.Convert;
+import com.thanh.ebacsi.security.JwtUtils;
 import com.thanh.ebacsi.service.role.RoleService;
 
+import com.thanh.ebacsi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +34,24 @@ public class RoleController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
     @GetMapping("/view")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     ResponseEntity<ResponseObject> getAllRole() {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Role query success", roleService.getAllRole()));
+    }
+
+    @GetMapping("/view/user")
+    @PreAuthorize("hasAnyAuthority('ADMIN','AUTHOR','EDITOR')")
+    ResponseEntity<ResponseObject> getRoleByUser(@RequestHeader("Authorization") String token) {
+        token = Convert.bearerTokenToToken(token);
+        User user = userService.findByUserName(jwtUtils.extractUsername(token));
+        Long userId = user.getUserId();
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Role query success", roleService.getRoleByUserId(userId)));
     }
 
     @PostMapping("/insert")

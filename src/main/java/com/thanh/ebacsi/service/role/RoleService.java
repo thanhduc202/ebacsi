@@ -16,4 +16,6 @@ public interface RoleService {
     public Role getRoleDefault();
 
     public Role getRoleByRoleId(Long roleId);
+
+    public List<RoleResponse> getRoleByUserId(Long userId);
 }
