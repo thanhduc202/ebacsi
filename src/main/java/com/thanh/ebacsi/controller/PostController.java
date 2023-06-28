@@ -1,7 +1,6 @@
 package com.thanh.ebacsi.controller;
 
 import com.thanh.ebacsi.dto.request.UserInfoRequest;
-import com.thanh.ebacsi.dto.response.TokenResponse;
 import com.thanh.ebacsi.entity.Category;
 import com.thanh.ebacsi.entity.Post;
 import com.thanh.ebacsi.entity.User;
@@ -11,7 +10,6 @@ import com.thanh.ebacsi.dto.response.ResponseObject;
 import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.PostRepository;
 import com.thanh.ebacsi.security.Convert;
-import com.thanh.ebacsi.security.CustomUserDetailsService;
 import com.thanh.ebacsi.security.JwtUtils;
 import com.thanh.ebacsi.service.category.CategoryService;
 
