@@ -37,8 +37,7 @@ public class CategoryController {
         if (category.size() > 0) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new CategoryResponse());
         }
-        Category category1 = new Category();
-        category1.setCname(categoryRequest.getCname());
+        Category category1 = new Category(categoryRequest);
         Category result = categoryService.save(category1);
         return ResponseEntity.status(HttpStatus.OK).body(new CategoryResponse(categoryService.save(result)));
     }
