@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    public List<Category> findByCname(String cname);
+    public Category findByCname(String cname);
 
     @Query("select c from Category c ")
     public List<CategoryResponse> getAllCategory();

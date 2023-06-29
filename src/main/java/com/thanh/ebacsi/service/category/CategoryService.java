@@ -10,7 +10,7 @@ public interface CategoryService {
 
     public List<CategoryResponse> findAll();
 
-    public List<Category> findByCname(String name);
+    public Category findByCname(String name);
 
     public Category findById(Long id);
 }

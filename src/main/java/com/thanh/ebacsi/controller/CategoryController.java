@@ -33,8 +33,8 @@ public class CategoryController {
     @PostMapping("/insert")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     ResponseEntity<CategoryResponse> insertCategory(@RequestBody CategoryRequest categoryRequest) {
-        List<Category> category = categoryService.findByCname(categoryRequest.getCname());
-        if (category.size() > 0) {
+        Category category = categoryService.findByCname(categoryRequest.getCname());
+        if (category != null) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new CategoryResponse());
         }
         Category category1 = new Category(categoryRequest);
@@ -52,7 +52,6 @@ public class CategoryController {
         category.setCname(categoryRequest.getCname());
         Category result = categoryRepository.save(category);
         return ResponseEntity.status(HttpStatus.OK).body(new CategoryResponse(result));
-
     }
 
     @DeleteMapping("/delete/{categoryId}")
