@@ -38,8 +38,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findById(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
-        if (!category.isPresent()) {
-            System.out.println("H");
+        if (category.isEmpty()) {
+            throw new NotFoundException("not found category");
         }
         return category.get();
     }

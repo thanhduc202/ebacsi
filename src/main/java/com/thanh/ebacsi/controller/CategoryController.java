@@ -4,6 +4,7 @@ import com.thanh.ebacsi.entity.Category;
 import com.thanh.ebacsi.dto.request.CategoryRequest;
 import com.thanh.ebacsi.dto.response.CategoryResponse;
 import com.thanh.ebacsi.dto.response.ResponseObject;
+import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.CategoryRepository;
 import com.thanh.ebacsi.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,19 @@ public class CategoryController {
         category1.setCname(categoryRequest.getCname());
         Category result = categoryService.save(category1);
         return ResponseEntity.status(HttpStatus.OK).body(new CategoryResponse(categoryService.save(result)));
+    }
+
+    @PutMapping("/update")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    ResponseEntity<CategoryResponse> updateCategory(@RequestBody CategoryRequest categoryRequest){
+        Category category = categoryService.findById(categoryRequest.getCategoryId());
+        if(category == null){
+            throw new NotFoundException("Not found category");
+        }
+        category.setCname(categoryRequest.getCname());
+        Category result = categoryRepository.save(category);
+        return ResponseEntity.status(HttpStatus.OK).body(new CategoryResponse(result));
+
     }
 
     @DeleteMapping("/delete/{categoryId}")
