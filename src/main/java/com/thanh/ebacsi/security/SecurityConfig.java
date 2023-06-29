@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .cors() // Deny request from other domain
                 .and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/user/auth/**","/api/v1/role/insert").permitAll() // Accept for access need no permission
+                .antMatchers("/api/v1/user/auth/**").permitAll() // Accept for access need no permission
                 .anyRequest().authenticated() // Other request must authenticate
                 .and()
                 .sessionManagement()
