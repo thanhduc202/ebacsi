@@ -4,6 +4,7 @@ import com.thanh.ebacsi.entity.Category;
 import com.thanh.ebacsi.dto.request.CategoryRequest;
 import com.thanh.ebacsi.dto.response.CategoryResponse;
 import com.thanh.ebacsi.dto.response.ResponseObject;
+import com.thanh.ebacsi.repository.CategoryRepository;
 import com.thanh.ebacsi.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @GetMapping("/view")
     ResponseEntity<ResponseObject> getAllCategory() {
@@ -36,5 +40,16 @@ public class CategoryController {
         category1.setCname(categoryRequest.getCname());
         Category result = categoryService.save(category1);
         return ResponseEntity.status(HttpStatus.OK).body(new CategoryResponse(categoryService.save(result)));
+    }
+
+    @DeleteMapping("/delete/{categoryId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    ResponseEntity<ResponseObject> deleteCategory(@PathVariable(name = "categoryId") Long categoryId){
+        boolean existed = categoryRepository.existsById(categoryId);
+        if(existed){
+            categoryRepository.deleteById(categoryId);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Delete successfully", ""));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Failed", "Not found category", ""));
     }
 }
