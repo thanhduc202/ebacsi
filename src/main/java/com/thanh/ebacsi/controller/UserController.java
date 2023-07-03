@@ -101,7 +101,6 @@ public class UserController {
         User user = userService.findByUserName(jwtUtils.extractUsername(token));
         user.setPassword(userInfoRequest.getPassword());
         return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(userRepository.save(user)));
-
     }
     @PutMapping("/disable")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
