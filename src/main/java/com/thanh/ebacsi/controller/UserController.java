@@ -67,6 +67,9 @@ public class UserController {
     @PostMapping("/auth/register")
     ResponseEntity<UserInfoResponse> insertUser(@RequestBody UserInfoRequest userInfoRequest) {
         User foundUser = userRepository.findByUsername(userInfoRequest.getUsername().trim());
+        if(foundUser != null){
+            throw new NotFoundException("Username have existed!");
+        }
         //Register user auto save role is USER
         Role foundRole = roleService.getRoleDefault();
         if(foundRole == null){
