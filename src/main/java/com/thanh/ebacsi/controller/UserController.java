@@ -8,6 +8,8 @@ import com.thanh.ebacsi.dto.response.ResponseObject;
 import com.thanh.ebacsi.repository.UserRepository;
 import com.thanh.ebacsi.dto.response.TokenResponse;
 import com.thanh.ebacsi.dto.response.UserInfoResponse;
+import com.thanh.ebacsi.security.Convert;
+import com.thanh.ebacsi.security.JwtUtils;
 import com.thanh.ebacsi.service.role.RoleService;
 import com.thanh.ebacsi.service.user.UserService;
 
@@ -29,6 +31,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @GetMapping("/view")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -90,6 +94,14 @@ public class UserController {
         user.setPassword(userInfoRequest.getPassword());
         User result = userRepository.save(user);
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new UserInfoResponse(result));
+    }
+
+    @PutMapping("/changePass")
+    ResponseEntity<UserInfoResponse> changePassword(@RequestBody UserInfoRequest userInfoRequest, @RequestHeader("Authorization") String token){
+        token = Convert.bearerTokenToToken(token);
+        User user = userService.findByUserName(jwtUtils.extractUsername(token));
+        user.setPassword(userInfoRequest.getPassword());
+        return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(userRepository.save(user)));
     }
 
     @PutMapping("/disable")
