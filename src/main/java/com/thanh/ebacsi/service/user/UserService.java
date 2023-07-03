@@ -11,15 +11,15 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface UserService {
-    public ResponseEntity<TokenResponse> login(UserInfoRequest userInfoRequest);
+    ResponseEntity<TokenResponse> login(UserInfoRequest userInfoRequest);
 
-    public ResponseEntity<ResponseObject> delete(String username);
+    ResponseEntity<ResponseObject> delete(String username);
 
-    public User findByUserName(String username);
+    User findByUserName(String username);
 
-    public User findById(Long id);
+    User findById(Long id);
 
-    public List<UserInfoResponse> findAll();
+    List<UserInfoResponse> findAll();
 
-    public List<UserInfoResponse> getUserEnable();
+    List<UserInfoResponse> getUserEnable();
 }
