@@ -95,7 +95,14 @@ public class UserController {
         User result = userRepository.save(user);
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new UserInfoResponse(result));
     }
+    @PutMapping("/changePass")
+    ResponseEntity<UserInfoResponse> changePassword(@RequestBody UserInfoRequest userInfoRequest, @RequestHeader("Authorization") String token){
+        token = Convert.bearerTokenToToken(token);
+        User user = userService.findByUserName(jwtUtils.extractUsername(token));
+        user.setPassword(userInfoRequest.getPassword());
+        return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(userRepository.save(user)));
 
+    }
     @PutMapping("/disable")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     ResponseEntity<ResponseObject> disableUser(@RequestBody UserInfoRequest userInfoRequest) {
