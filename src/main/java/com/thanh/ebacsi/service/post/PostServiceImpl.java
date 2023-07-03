@@ -41,11 +41,6 @@ public class PostServiceImpl implements PostService {
     private UserRepository userRepository;
 
     @Override
-    public Post save(Post post) {
-        return postRepository.save(post);
-    }
-
-    @Override
     public List<PostResponse> getAllPost() {
         return postRepository.getAllPost();
     }
