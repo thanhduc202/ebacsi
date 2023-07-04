@@ -11,19 +11,22 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    public User findByUsername(String username);
+    @Query("""
+            select u from User u where u.username = :username
+            """)
+    User findByUsername(String username);
 
-    public User deleteUsersByUsername(String username);
+    User deleteUsersByUsername(String username);
 
     @Query("select u from User u")
-    public List<UserInfoResponse> findAllUser();
+    List<UserInfoResponse> findAllUser();
 
     @Query("select u from User u where u.userId=?1")
-    public User findByUserId(Long userId);
+    User findByUserId(Long userId);
 
     @Query("""
             select u from User u where u.enable = true
             """)
-    public List<UserInfoResponse> getUserEnable();
+    List<UserInfoResponse> getUserEnable();
 }
 

@@ -52,11 +52,7 @@ public class UserController {
 
     @GetMapping("/search")
     ResponseEntity<UserInfoResponse> findByUsername(@RequestBody UserInfoRequest userInfoRequest) {
-        User user = userService.findByUserName(userInfoRequest.getUsername());
-        if (user == null) {
-            throw new NotFoundException("Not found user");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(userService.findByUserName(userInfoRequest.getUsername())));
+        return userService.findByUserName(userInfoRequest);
     }
 
     @PostMapping("/auth/login")
@@ -66,60 +62,29 @@ public class UserController {
 
     @PostMapping("/auth/register")
     ResponseEntity<UserInfoResponse> insertUser(@RequestBody UserInfoRequest userInfoRequest) {
-        User foundUser = userRepository.findByUsername(userInfoRequest.getUsername().trim());
-        if(foundUser != null){
-            throw new NotFoundException("Username have existed!");
-        }
-        //Register user auto save role is USER
-        Role foundRole = roleService.getRoleDefault();
-        if(foundRole == null){
-            throw new NotFoundException("Not found role name");
-        }
-        User user = new User();
-        user.setUsername(userInfoRequest.getUsername());
-        user.setPassword(userInfoRequest.getPassword());
-        user.setEnable(userInfoRequest.getEnable());
-        Set<Role> roleSet = new HashSet<>();
-        roleSet.add(foundRole);
-        user.setRole(roleSet);
-        User result = userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(result));
+        return userService.insertUser(userInfoRequest);
     }
 
     @PutMapping("/update")
     @PreAuthorize("hasAnyAuthority('ADMIN','AUTHOR')")
     ResponseEntity<UserInfoResponse> updateUser(@RequestBody UserInfoRequest userInfoRequest) {
-        if (userInfoRequest.getUserId() == null) {
-            throw new NotFoundException("Not found user");
-        }
-        User user = userService.findById(userInfoRequest.getUserId());
-        user.setUsername(userInfoRequest.getUsername());
-        user.setPassword(userInfoRequest.getPassword());
-        User result = userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new UserInfoResponse(result));
+        return userService.updateUser(userInfoRequest);
     }
 
     @PutMapping("/changePass")
-    ResponseEntity<UserInfoResponse> changePassword(@RequestBody UserInfoRequest userInfoRequest, @RequestHeader("Authorization") String token){
-        token = Convert.bearerTokenToToken(token);
-        User user = userService.findByUserName(jwtUtils.extractUsername(token));
-        user.setPassword(userInfoRequest.getPassword());
-        return ResponseEntity.status(HttpStatus.OK).body(new UserInfoResponse(userRepository.save(user)));
+    ResponseEntity<UserInfoResponse> changePassword(@RequestBody UserInfoRequest userInfoRequest, @RequestHeader("Authorization") String token) {
+        return userService.changePassword(userInfoRequest, token);
     }
 
     @PutMapping("/disable")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     ResponseEntity<ResponseObject> disableUser(@RequestBody UserInfoRequest userInfoRequest) {
-        User user = userService.findById(userInfoRequest.getUserId());
-        user.setEnable(false);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "user query success",userRepository.save(user)));
+        return userService.disableUser(userInfoRequest);
     }
 
     @PutMapping("/enable")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     ResponseEntity<ResponseObject> enableUser(@RequestBody UserInfoRequest userInfoRequest) {
-        User user = userService.findById(userInfoRequest.getUserId());
-        user.setEnable(true);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "user query success",userRepository.save(user)));
+        return userService.enableUser(userInfoRequest);
     }
 }
