@@ -11,19 +11,24 @@ import java.util.List;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
+    @Query("""
+            select r from Role r where r.roleName = :roleName
+            """)
+    Role findByRoleName(String roleName);
+
     @Query("select r from Role r")
-    public List<RoleResponse> findAllRole();
+    List<RoleResponse> findAllRole();
 
     @Query("select r from Role r where r.roleId = 2")
-    public Role getRoleDefault();
+    Role getRoleDefault();
 
     @Query("select r from Role r where r.roleId = ?1")
-    public Role getRoleByRoleId(Long roleId);
+    Role getRoleByRoleId(Long roleId);
 
     @Query("""
             select r from Role r
             inner join r.user u
             WHERE u.userId = :userId
             """)
-    public List<RoleResponse> getRoleByUserId(Long userId);
+    List<RoleResponse> getRoleByUserId(Long userId);
 }
