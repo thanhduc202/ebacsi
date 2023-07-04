@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface CategoryService {
-    public Category save(Category category);
+    Category save(Category category);
 
-    public List<CategoryResponse> findAll();
+    List<CategoryResponse> findAll();
 
-    public Category findByCname(String name);
+    Category findByCname(String name);
 
-    public Category findById(Long id);
+    Category findById(Long id);
 
     ResponseEntity<CategoryResponse> insertCategory(CategoryRequest categoryRequest);
 

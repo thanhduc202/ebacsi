@@ -13,15 +13,15 @@ import java.util.List;
 
 public interface RoleService {
 
-    public Role findByRoleId(Long roleId);
+    Role findByRoleId(Long roleId);
 
-    public List<RoleResponse> getAllRole();
+    List<RoleResponse> getAllRole();
 
-    public Role getRoleDefault();
+    Role getRoleDefault();
 
-    public Role getRoleByRoleId(Long roleId);
+    Role getRoleByRoleId(Long roleId);
 
-    public List<RoleResponse> getRoleByUserId(Long userId);
+    List<RoleResponse> getRoleByUserId(Long userId);
 
     ResponseEntity<ResponseObject> getRoleByUser(String token);
 
