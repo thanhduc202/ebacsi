@@ -32,14 +32,7 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @Override
-    public Role findByRoleId(Long roleId) {
-        Optional<Role> role = roleRepository.findById(roleId);
-        if (role.isEmpty()) {
-            throw new RuntimeException("Not found role");
-        }
-        return role.get();
-    }
+
 
     @Override
     public List<RoleResponse> getAllRole() {
@@ -48,16 +41,6 @@ public class RoleServiceImpl implements RoleService {
             throw new NotFoundException("Not found Role");
         }
         return list;
-    }
-
-    @Override
-    public Role getRoleDefault() {
-        return roleRepository.getRoleDefault();
-    }
-
-    @Override
-    public Role getRoleByRoleId(Long roleId) {
-        return roleRepository.getRoleByRoleId(roleId);
     }
 
     @Override

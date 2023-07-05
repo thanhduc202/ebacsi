@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface PostService {
-    Post save(Post post);
 
     List<PostResponse> getAllPost();
 
@@ -26,8 +25,6 @@ public interface PostService {
     List<PostResponse> search(String keyword);
 
     List<PostResponse> findPostByUserId(String token);
-
-    Long getIdFromToken(String token);
 
     ResponseEntity<ResponseObject> deletePost(Long postId);
 

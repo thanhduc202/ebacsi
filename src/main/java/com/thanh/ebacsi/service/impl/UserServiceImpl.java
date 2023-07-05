@@ -61,15 +61,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<ResponseObject> delete(String username) {
-        User foundUser = userRepository.findByUsername(username);
-        if (foundUser == null) {
-            throw new RuntimeException();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "User query success", userRepository.deleteUsersByUsername(username)));
-    }
-
-    @Override
     public ResponseEntity<UserInfoResponse> findByUserName(UserInfoRequest userInfoRequest) {
         User user = userRepository.findByUsername(userInfoRequest.getUsername());
         if(user == null){

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface CategoryService {
-    Category save(Category category);
 
     List<CategoryResponse> findAll();
 

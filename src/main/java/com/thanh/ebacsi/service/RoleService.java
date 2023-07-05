@@ -4,20 +4,14 @@ import com.thanh.ebacsi.dto.request.RoleRequest;
 import com.thanh.ebacsi.dto.response.ResponseObject;
 import com.thanh.ebacsi.dto.response.RoleResponse;
 import com.thanh.ebacsi.dto.response.UserInfoResponse;
-import com.thanh.ebacsi.entity.Role;
+
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface RoleService {
 
-    Role findByRoleId(Long roleId);
-
     List<RoleResponse> getAllRole();
-
-    Role getRoleDefault();
-
-    Role getRoleByRoleId(Long roleId);
 
     List<RoleResponse> getRoleByUserId(Long userId);
 

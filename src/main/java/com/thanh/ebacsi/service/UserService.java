@@ -14,8 +14,6 @@ import java.util.List;
 public interface UserService {
     ResponseEntity<TokenResponse> login(UserInfoRequest userInfoRequest);
 
-    ResponseEntity<ResponseObject> delete(String username);
-
     ResponseEntity<UserInfoResponse> findByUserName(UserInfoRequest userInfoRequest);
 
     User findById(Long id);

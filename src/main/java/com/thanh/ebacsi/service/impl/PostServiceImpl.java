@@ -42,11 +42,6 @@ public class PostServiceImpl implements PostService {
     private UserRepository userRepository;
 
     @Override
-    public Post save(Post post) {
-        return postRepository.save(post);
-    }
-
-    @Override
     public List<PostResponse> getAllPost() {
         return postRepository.getAllPost();
     }
@@ -122,14 +117,6 @@ public class PostServiceImpl implements PostService {
         User user = userRepository.findByUsername(jwtUtils.extractUsername(token));
         Long userId = user.getUserId();
         return postRepository.findPostByUserId(userId);
-    }
-
-    @Override
-    public Long getIdFromToken(String token) {
-        String secret = "secret"; // Replace with your actual secret key
-        // Remove the "Bearer " prefix from the token
-        String jwtToken = token.replace("Bearer ", "");
-        return jwtUtils.extractIdFromToken(secret, jwtToken);
     }
 
     @Override
