@@ -48,8 +48,8 @@ public class PostController {
     }
 
     @GetMapping("/user")
-    ResponseEntity<ResponseObject> getPostByUsername(@RequestBody UserInfoRequest userInfoRequest, String username) {
-        username = userInfoRequest.getUsername();
+    ResponseEntity<ResponseObject> getPostByUsername(@RequestBody UserInfoRequest userInfoRequest) {
+        String username = userInfoRequest.getUsername();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Post query success", postService.getPostByUsername(username)));
     }
 
