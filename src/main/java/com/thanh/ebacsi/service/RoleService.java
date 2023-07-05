@@ -6,8 +6,6 @@ import com.thanh.ebacsi.dto.response.RoleResponse;
 import com.thanh.ebacsi.dto.response.UserInfoResponse;
 import com.thanh.ebacsi.entity.Role;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

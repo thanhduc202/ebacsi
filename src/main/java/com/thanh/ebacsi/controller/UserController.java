@@ -2,11 +2,8 @@ package com.thanh.ebacsi.controller;
 
 import com.thanh.ebacsi.dto.request.UserInfoRequest;
 import com.thanh.ebacsi.dto.response.ResponseObject;
-import com.thanh.ebacsi.repository.UserRepository;
 import com.thanh.ebacsi.dto.response.TokenResponse;
 import com.thanh.ebacsi.dto.response.UserInfoResponse;
-import com.thanh.ebacsi.security.JwtUtils;
-import com.thanh.ebacsi.service.RoleService;
 import com.thanh.ebacsi.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
+
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private JwtUtils jwtUtils;
 
     @GetMapping("/view")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
