@@ -1,4 +1,4 @@
-package com.thanh.ebacsi.service.category;
+package com.thanh.ebacsi.service;
 
 import com.thanh.ebacsi.dto.request.CategoryRequest;
 import com.thanh.ebacsi.dto.response.ResponseObject;

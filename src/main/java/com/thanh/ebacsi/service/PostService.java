@@ -1,4 +1,4 @@
-package com.thanh.ebacsi.service.post;
+package com.thanh.ebacsi.service;
 
 import com.thanh.ebacsi.dto.request.PostRequest;
 import com.thanh.ebacsi.dto.response.PostResponse;

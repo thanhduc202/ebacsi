@@ -1,4 +1,4 @@
-package com.thanh.ebacsi.service.post;
+package com.thanh.ebacsi.service.impl;
 
 import com.thanh.ebacsi.dto.request.PostRequest;
 import com.thanh.ebacsi.dto.response.PostResponse;
@@ -12,8 +12,9 @@ import com.thanh.ebacsi.repository.PostRepository;
 import com.thanh.ebacsi.repository.UserRepository;
 import com.thanh.ebacsi.security.Convert;
 import com.thanh.ebacsi.security.JwtUtils;
-import com.thanh.ebacsi.service.category.CategoryService;
 
+import com.thanh.ebacsi.service.CategoryService;
+import com.thanh.ebacsi.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

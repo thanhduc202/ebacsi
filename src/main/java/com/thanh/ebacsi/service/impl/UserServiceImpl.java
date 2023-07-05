@@ -1,4 +1,4 @@
-package com.thanh.ebacsi.service.user;
+package com.thanh.ebacsi.service.impl;
 
 import com.thanh.ebacsi.dto.request.UserInfoRequest;
 import com.thanh.ebacsi.entity.Role;
@@ -13,6 +13,7 @@ import com.thanh.ebacsi.security.Convert;
 import com.thanh.ebacsi.security.CustomUserDetailsService;
 import com.thanh.ebacsi.security.JwtUtils;
 
+import com.thanh.ebacsi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

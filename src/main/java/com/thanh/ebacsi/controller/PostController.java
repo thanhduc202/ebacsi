@@ -4,7 +4,7 @@ import com.thanh.ebacsi.dto.request.UserInfoRequest;
 import com.thanh.ebacsi.dto.request.PostRequest;
 import com.thanh.ebacsi.dto.response.PostResponse;
 import com.thanh.ebacsi.dto.response.ResponseObject;
-import com.thanh.ebacsi.service.post.PostService;
+import com.thanh.ebacsi.service.PostService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

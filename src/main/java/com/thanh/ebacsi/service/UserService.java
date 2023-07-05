@@ -1,4 +1,4 @@
-package com.thanh.ebacsi.service.user;
+package com.thanh.ebacsi.service;
 
 import com.thanh.ebacsi.dto.request.UserInfoRequest;
 import com.thanh.ebacsi.entity.User;

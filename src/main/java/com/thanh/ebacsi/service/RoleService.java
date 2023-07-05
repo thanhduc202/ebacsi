@@ -1,4 +1,4 @@
-package com.thanh.ebacsi.service.role;
+package com.thanh.ebacsi.service;
 
 import com.thanh.ebacsi.dto.request.RoleRequest;
 import com.thanh.ebacsi.dto.response.ResponseObject;

@@ -1,26 +1,19 @@
 package com.thanh.ebacsi.controller;
 
-import com.thanh.ebacsi.entity.Role;
-import com.thanh.ebacsi.entity.User;
-import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.dto.request.UserInfoRequest;
 import com.thanh.ebacsi.dto.response.ResponseObject;
 import com.thanh.ebacsi.repository.UserRepository;
 import com.thanh.ebacsi.dto.response.TokenResponse;
 import com.thanh.ebacsi.dto.response.UserInfoResponse;
-import com.thanh.ebacsi.security.Convert;
 import com.thanh.ebacsi.security.JwtUtils;
-import com.thanh.ebacsi.service.role.RoleService;
-import com.thanh.ebacsi.service.user.UserService;
+import com.thanh.ebacsi.service.RoleService;
+import com.thanh.ebacsi.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/user")

@@ -4,7 +4,7 @@ import com.thanh.ebacsi.dto.request.RoleRequest;
 import com.thanh.ebacsi.dto.response.ResponseObject;
 import com.thanh.ebacsi.dto.response.RoleResponse;
 import com.thanh.ebacsi.dto.response.UserInfoResponse;
-import com.thanh.ebacsi.service.role.RoleService;
+import com.thanh.ebacsi.service.RoleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

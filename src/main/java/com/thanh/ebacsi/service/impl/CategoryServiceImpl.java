@@ -1,4 +1,4 @@
-package com.thanh.ebacsi.service.category;
+package com.thanh.ebacsi.service.impl;
 
 import com.thanh.ebacsi.dto.request.CategoryRequest;
 import com.thanh.ebacsi.dto.response.ResponseObject;
@@ -6,6 +6,7 @@ import com.thanh.ebacsi.entity.Category;
 import com.thanh.ebacsi.exception.NotFoundException;
 import com.thanh.ebacsi.repository.CategoryRepository;
 import com.thanh.ebacsi.dto.response.CategoryResponse;
+import com.thanh.ebacsi.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

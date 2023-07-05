@@ -1,4 +1,4 @@
-package com.thanh.ebacsi.service.role;
+package com.thanh.ebacsi.service.impl;
 
 import com.thanh.ebacsi.dto.request.RoleRequest;
 import com.thanh.ebacsi.dto.response.ResponseObject;
@@ -11,6 +11,7 @@ import com.thanh.ebacsi.repository.RoleRepository;
 import com.thanh.ebacsi.repository.UserRepository;
 import com.thanh.ebacsi.security.Convert;
 import com.thanh.ebacsi.security.JwtUtils;
+import com.thanh.ebacsi.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
