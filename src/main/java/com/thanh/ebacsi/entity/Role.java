@@ -1,7 +1,6 @@
 package com.thanh.ebacsi.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thanh.ebacsi.dto.request.RoleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
