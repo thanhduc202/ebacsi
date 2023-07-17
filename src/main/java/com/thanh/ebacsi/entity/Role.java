@@ -31,10 +31,4 @@ public class Role {
         this.roleName = request.getRoleName();
         this.roleId = request.getRoleId();
     }
-//    public Role(List<String> roleNames) {
-//        // Iterate over the list of role names and create Role objects
-//        for (String roleName : roleNames) {
-//            this.roleName = roleName;
-//        }
-//    }
 }
