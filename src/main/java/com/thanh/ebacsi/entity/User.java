@@ -40,6 +40,8 @@ public class User {
     @JsonManagedReference
     private List<Post>  post;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Feedback feedback;
 
     public User(UserInfoRequest userInfoRequest) {
         this.username = userInfoRequest.getUsername();

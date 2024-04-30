@@ -27,7 +27,7 @@ public class PostResponse {
         this.title = post.getTitle();
         this.categoryId = post.getCategory().getCategoryId();
         this.createAt = post.getCreateAt().toEpochMilli();
-        this.updateAt = post.getUpdateAt().toEpochMilli();
+
         this.userId = post.getUsers().getUserId();
     }
 

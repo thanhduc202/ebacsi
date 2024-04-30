@@ -52,6 +52,9 @@ public class Post {
     @JsonBackReference
     private Set<Tag> tag;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Feedback> feedbacks;
+
     public Post(PostRequest request) {
         this.title = request.getTitle();
         this.content = request.getContent();
