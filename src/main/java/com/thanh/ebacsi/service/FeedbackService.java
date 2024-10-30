@@ -15,7 +15,9 @@ public interface FeedbackService {
 
     Feedback insertFeedback (FeedbackRequest feedbackRequest, String token);
 
-    ResponseEntity<FeedbackResponse> updateFeedback (FeedbackRequest feedbackRequest);
+    ResponseEntity<FeedbackResponse> updateAllFeedback (FeedbackRequest feedbackRequest);
+
+    ResponseEntity<FeedbackResponse> updateOwnFeedback (FeedbackRequest feedbackRequest, String token);
 
     ResponseEntity<ResponseObject> deleteFeedback(Long feedbackId);
 

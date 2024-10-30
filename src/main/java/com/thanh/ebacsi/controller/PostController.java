@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @RestController
 @RequestMapping(path = "/api/v1/post")
 @Slf4j
+@CrossOrigin("*")
 public class PostController {
 
     @Autowired

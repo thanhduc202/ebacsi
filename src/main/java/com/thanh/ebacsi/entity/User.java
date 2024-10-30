@@ -1,5 +1,7 @@
 package com.thanh.ebacsi.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thanh.ebacsi.dto.request.UserInfoRequest;
 import lombok.AllArgsConstructor;
@@ -37,10 +39,11 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Post>  post;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Feedback feedback;
 
     public User(UserInfoRequest userInfoRequest) {

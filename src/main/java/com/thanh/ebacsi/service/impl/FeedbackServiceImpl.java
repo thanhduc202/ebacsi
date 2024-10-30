@@ -15,11 +15,13 @@ import com.thanh.ebacsi.security.Convert;
 import com.thanh.ebacsi.security.JwtUtils;
 import com.thanh.ebacsi.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
@@ -72,9 +74,36 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public ResponseEntity<FeedbackResponse> updateFeedback(FeedbackRequest feedbackRequest) {
+    public ResponseEntity<FeedbackResponse> updateAllFeedback(FeedbackRequest feedbackRequest) {
         return null;
     }
+
+    @Override
+    public ResponseEntity<FeedbackResponse> updateOwnFeedback(FeedbackRequest feedbackRequest, String token) {
+        token = Convert.bearerTokenToToken(token);
+        User user = userRepository.findByUsername(jwtUtils.extractUsername(token));
+        List<Feedback> foundFeedback = feedbackRepository.findFeedbackByUser(user.getUserId());
+        if(foundFeedback.isEmpty()) {
+            throw new NotFoundException("Not feedback by this user");
+        }
+        Feedback fb = null;
+        Post post = postRepository.getPostsByPostId(feedbackRequest.getPostId());
+        Set<Feedback> feedbacks = post.getFeedbacks();
+        for (Feedback feedback : feedbacks) {
+            Long feedbackId = feedback.getFeedbackId();
+            if (feedbackId.equals(feedbackRequest.getFeedBackId())){
+                feedback.setContent(feedbackRequest.getContent());
+                fb = feedbackRepository.save(feedback);
+                break;
+            }
+            if (fb == null) {
+                throw new NotFoundException("Feedback not found for this post");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(new FeedbackResponse(post.getPostId(),post.getUsers().getUserId(),
+                fb.getContent(), post.getUsers().getUsername(),fb.getSubmitTime()));
+    }
+
 
     @Override
     public ResponseEntity<ResponseObject> deleteFeedback(Long feedbackId) {

@@ -12,7 +12,7 @@ public interface PostService {
 
     List<PostResponse> getAllPost();
 
-    Post getPostsByPostId(Long postId);
+    PostResponse getPostsByPostId(Long postId);
 
     Post insertPost(PostRequest postRequest, String token);
 

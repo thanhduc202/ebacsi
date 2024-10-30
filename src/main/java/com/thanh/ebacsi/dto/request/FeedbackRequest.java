@@ -11,6 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class FeedbackRequest {
     private Long postId;
+    private Long feedBackId;
     private Long userId;
     private String content;
 }

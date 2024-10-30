@@ -3,6 +3,7 @@ package com.thanh.ebacsi.service.impl;
 import com.thanh.ebacsi.dto.request.PostRequest;
 import com.thanh.ebacsi.dto.response.PostResponse;
 import com.thanh.ebacsi.dto.response.ResponseObject;
+import com.thanh.ebacsi.dto.response.UserInfoResponse;
 import com.thanh.ebacsi.entity.Category;
 import com.thanh.ebacsi.entity.Post;
 import com.thanh.ebacsi.entity.User;
@@ -16,6 +17,7 @@ import com.thanh.ebacsi.security.JwtUtils;
 import com.thanh.ebacsi.service.CategoryService;
 import com.thanh.ebacsi.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -41,18 +43,28 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RedisTemplate<Object, Object> redisTemplate;
+
     @Override
     public List<PostResponse> getAllPost() {
-        return postRepository.getAllPost();
+        List<PostResponse> posts =  (List<PostResponse>) redisTemplate.opsForValue().get("post");
+        if (posts == null) {
+            posts = postRepository.getAllPost();
+            redisTemplate.opsForValue().set("users", posts);
+
+        }
+        return posts;
     }
 
     @Override
-    public Post getPostsByPostId(Long postId) {
+    public PostResponse getPostsByPostId(Long postId) {
         Post foundPost = postRepository.getPostsByPostId(postId);
         if(foundPost == null){
             throw new NotFoundException("Not found post by this id");
         }
-        return foundPost;
+        PostResponse postResponse = new PostResponse(foundPost);
+        return postResponse;
     }
 
     @Override
@@ -77,7 +89,7 @@ public class PostServiceImpl implements PostService {
             throw new NotFoundException("Not found post");
         }
         Category category = categoryService.findById(postRequest.getCategoryId());
-        Post post = getPostsByPostId(postRequest.getPostId());
+        Post post = postRepository.getPostsByPostId(postRequest.getPostId());
         post.setTitle(postRequest.getTitle());
         post.setContent(postRequest.getContent());
         post.setCategory(category);

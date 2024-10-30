@@ -1,16 +1,17 @@
 package com.thanh.ebacsi.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thanh.ebacsi.dto.request.PostRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.time.Instant;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "post")
@@ -18,8 +19,6 @@ import java.time.Instant;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
-
 public class Post {
 
     @Id
@@ -37,22 +36,24 @@ public class Post {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    @JsonBackReference
+    @JsonManagedReference
+
     private User users;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
-    @JsonBackReference
+    @JsonManagedReference
     private Category category;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "post_tag", joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
-    @JsonBackReference
+    @JsonManagedReference
     private Set<Tag> tag;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private Set<Feedback> feedbacks;
 
     public Post(PostRequest request) {

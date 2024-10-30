@@ -15,6 +15,7 @@ import com.thanh.ebacsi.security.JwtUtils;
 
 import com.thanh.ebacsi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,10 +23,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,6 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    private RedisTemplate<Object, Object> redisTemplate;
 
     @Autowired
     private JwtUtils jwtUtils;
@@ -78,9 +79,18 @@ public class UserServiceImpl implements UserService {
         return foundUser.get();
     }
 
+
     @Override
     public List<UserInfoResponse> findAll() {
-        return userRepository.findAllUser();
+        List<UserInfoResponse> users = (List<UserInfoResponse>) redisTemplate.opsForValue().get("users");
+
+        if (users == null) {
+            // Nếu không có, truy vấn từ database và lưu vào Redis
+            users = userRepository.findAllUser();
+            redisTemplate.opsForValue().set("users", users);
+        }
+
+        return users;
     }
 
     @Override
